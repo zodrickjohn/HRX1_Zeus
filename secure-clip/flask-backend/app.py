@@ -8,13 +8,16 @@ import os
 from typing import Dict, List, Any
 from user_agents import parse as parse_user_agent
 from flask_socketio import SocketIO, emit, join_room
+from dotenv import load_dotenv
+
+load_dotenv()  
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:8080", "http://localhost:3000", "http://localhost:5173"])
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-# Set OpenAI API key
-openai.api_key = "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"
+# Fetch the key securely
+openai.api_key = os.getenv("OPENAI_API_KEY")  
 
 # In-memory storage (replace with real database in production)
 users_db = {}
